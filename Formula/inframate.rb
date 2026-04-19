@@ -1,11 +1,15 @@
 class Inframate < Formula
   desc "CLI tool for managing Terraform infrastructure with a local web UI"
   homepage "https://github.com/neuroship/inframate"
-  url "https://files.pythonhosted.org/packages/6b/ed/8bbbd2b19ce80f823767e39977d9b15d3000b69d21ca83515e567c6cf42e/inframate-0.0.9.tar.gz"
-  sha256 "fbdc3c42f2c9c0f71f291ead6096fd90069a73fd9dff6940beb01b8ba4892c6b"
+  url "https://files.pythonhosted.org/packages/e0/0f/4b0f689351dbde4c85f16ebf43b6c1b083835e916a06d6aeeaec84502fdb/inframate-0.0.10.tar.gz"
+  sha256 "3cc9996bd57786f8bc1219575a3bb3e67bf983e9dea3edb12b11641244633c47"
   license "AGPL-3.0-only"
 
   depends_on "python@3.13"
+
+  # Skip Homebrew relocation of native extensions in the venv
+  # (Rust-compiled .so files like jiter lack header padding for longer paths)
+  skip_clean "libexec"
 
   def install
     python = Formula["python@3.13"].opt_bin/"python3.13"
