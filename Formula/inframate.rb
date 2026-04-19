@@ -1,16 +1,15 @@
 class Inframate < Formula
-  include Language::Python::Virtualenv
-
   desc "CLI tool for managing Terraform infrastructure with a local web UI"
   homepage "https://github.com/neuroship/inframate"
-  url "https://files.pythonhosted.org/packages/82/f2/8e40ddfede6738e7d9b78da3cbe2459fe29003de6a40c2edd34e5dc91203/inframate-0.0.8.tar.gz"
-  sha256 "16b2ac4cf011b241654082e197e3a35970cd3976489b0c1a4f44872162403cb3"
+  url "https://files.pythonhosted.org/packages/6b/ed/8bbbd2b19ce80f823767e39977d9b15d3000b69d21ca83515e567c6cf42e/inframate-0.0.9.tar.gz"
+  sha256 "fbdc3c42f2c9c0f71f291ead6096fd90069a73fd9dff6940beb01b8ba4892c6b"
   license "AGPL-3.0-only"
 
   depends_on "python@3.13"
 
   def install
-    virtualenv_create(libexec, Formula["python@3.13"].opt_bin/"python3.13")
+    python = Formula["python@3.13"].opt_bin/"python3.13"
+    system python, "-m", "venv", libexec
     system libexec/"bin/pip", "install", "."
     bin.install_symlink libexec/"bin/inframate"
   end
