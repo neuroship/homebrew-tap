@@ -3,8 +3,8 @@ class Inframate < Formula
 
   desc "CLI tool for managing Terraform infrastructure with a local web UI"
   homepage "https://github.com/neuroship/inframate"
-  url "https://files.pythonhosted.org/packages/4a/6f/62f7aa9e131247f633835cf09f2356c00eaf9eb0dcbc2de5812fbf117331/inframate-0.2.2.tar.gz"
-  sha256 "02716d67803f39b7f854579955abcbb0a63cee9d6a09d46cf146dd094ffe9a39"
+  url "https://files.pythonhosted.org/packages/22/e9/b9fc89df559595d297b469a60ef42a1d7994f49e1c69df0f7302d1e7e5be/inframate-0.2.3.tar.gz"
+  sha256 "47353df79f1569707e3ef47f625cc245ff439cc0746d8fe5a7158a9db5c8c789"
   license "AGPL-3.0-only"
 
   depends_on "python@3.13"
@@ -335,21 +335,19 @@ class Inframate < Formula
   
 
   def install
-    virtualenv_create(libexec, "python3.13")
+    venv = virtualenv_create(libexec, "python3.13")
     resources.each do |r|
       r.stage do
         whl = Dir.glob("*.whl").first
         if whl
-          system libexec/"bin/pip", "install", "-v", "--no-deps", "--ignore-installed", whl
+          system libexec/"bin/python", "-m", "pip", "install", "-v",
+                 "--no-deps", "--ignore-installed", whl
         else
-          system libexec/"bin/pip", "install", "-v", "--no-deps", "--no-binary", ":all:",
-                 "--ignore-installed", "."
+          venv.pip_install Pathname.pwd
         end
       end
     end
-    system libexec/"bin/pip", "install", "-v", "--no-deps", "--no-binary", ":all:",
-           "--ignore-installed", "."
-    bin.install_symlink libexec/"bin/inframate"
+    venv.pip_install_and_link buildpath
   end
 
   test do
