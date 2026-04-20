@@ -3,8 +3,8 @@ class Inframate < Formula
 
   desc "CLI tool for managing Terraform infrastructure with a local web UI"
   homepage "https://github.com/neuroship/inframate"
-  url "https://files.pythonhosted.org/packages/35/89/bb945ad487312e09e2cbc513717523f5c40c3097e4758cc3708cbe9f3288/inframate-0.2.0.tar.gz"
-  sha256 "a7bff1dcf6d692be62d29098ac6314306d833183d38d9e65fc478b284d9cd87a"
+  url "https://files.pythonhosted.org/packages/53/10/4d4ef0ff3dae65cd2bfb0eb147cdc5ab50ef26ddd75b545eaa00d80f1167/inframate-0.2.1.tar.gz"
+  sha256 "7d58abce7add4f1e6c30dd4021a11a5d8be80c1053947b1931a25428c8ddcd4b"
   license "AGPL-3.0-only"
 
   depends_on "python@3.13"
