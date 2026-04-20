@@ -3,8 +3,8 @@ class Inframate < Formula
 
   desc "CLI tool for managing Terraform infrastructure with a local web UI"
   homepage "https://github.com/neuroship/inframate"
-  url "https://files.pythonhosted.org/packages/53/10/4d4ef0ff3dae65cd2bfb0eb147cdc5ab50ef26ddd75b545eaa00d80f1167/inframate-0.2.1.tar.gz"
-  sha256 "7d58abce7add4f1e6c30dd4021a11a5d8be80c1053947b1931a25428c8ddcd4b"
+  url "https://files.pythonhosted.org/packages/4a/6f/62f7aa9e131247f633835cf09f2356c00eaf9eb0dcbc2de5812fbf117331/inframate-0.2.2.tar.gz"
+  sha256 "02716d67803f39b7f854579955abcbb0a63cee9d6a09d46cf146dd094ffe9a39"
   license "AGPL-3.0-only"
 
   depends_on "python@3.13"
@@ -126,6 +126,20 @@ class Inframate < Formula
     sha256 "795dafcc9c04ed0c1fb032c2aa73654d8e8c5023a7df64a53f39190ada629902"
   end
   
+  on_arm do
+    resource "jiter" do
+      url "https://files.pythonhosted.org/packages/d6/be/080c96a45cd74f9fce5db4fd68510b88087fb37ffe2541ff73c12db92535/jiter-0.14.0-cp313-cp313-macosx_11_0_arm64.whl", using: :nounzip
+      sha256 "4b77da71f6e819be5fbcec11a453fde5b1d0267ef6ed487e2a392fd8e14e4e3a"
+    end
+  end
+  
+  on_intel do
+    resource "jiter" do
+      url "https://files.pythonhosted.org/packages/97/2a/09f70020898507a89279659a1afe3364d57fc1b2c89949081975d135f6f5/jiter-0.14.0-cp313-cp313-macosx_10_12_x86_64.whl", using: :nounzip
+      sha256 "af72f204cf4d44258e5b4c1745130ac45ddab0e71a06333b01de660ab4187a94"
+    end
+  end
+  
   resource "jmespath" do
     url "https://files.pythonhosted.org/packages/d3/59/322338183ecda247fb5d1763a6cbe46eff7222eaeebafd9fa65d4bf5cb11/jmespath-1.1.0.tar.gz"
     sha256 "472c87d80f36026ae83c6ddd0f1d05d4e510134ed462851fd5f754c8c3cbb88d"
@@ -179,6 +193,20 @@ class Inframate < Formula
   resource "pydantic" do
     url "https://files.pythonhosted.org/packages/09/e5/06d23afac9973109d1e3c8ad38e1547a12e860610e327c05ee686827dc37/pydantic-2.13.2.tar.gz"
     sha256 "b418196607e61081c3226dcd4f0672f2a194828abb9109e9cfb84026564df2d1"
+  end
+  
+  on_arm do
+    resource "pydantic_core" do
+      url "https://files.pythonhosted.org/packages/73/ab/bafd7c7503757ccc8ec4d1911e106fe474c629443648c51a88f08b0fe91a/pydantic_core-2.46.2-cp313-cp313-macosx_11_0_arm64.whl", using: :nounzip
+      sha256 "48b36e3235140510dc7861f0cd58b714b1cdd3d48f75e10ce52e69866b746f10"
+    end
+  end
+  
+  on_intel do
+    resource "pydantic_core" do
+      url "https://files.pythonhosted.org/packages/07/2b/662e48254479a2d3450ba24b1e25061108b64339794232f503990c519144/pydantic_core-2.46.2-cp313-cp313-macosx_10_12_x86_64.whl", using: :nounzip
+      sha256 "d26e9eea3715008a09a74585fe9becd0c67fbb145dc4df9756d597d7230a652c"
+    end
   end
   
   resource "Pygments" do
@@ -276,6 +304,20 @@ class Inframate < Formula
     sha256 "6c84bae345b9147082b17371e3dd5d42775bddce91f885499017f4607fdaf39f"
   end
   
+  on_arm do
+    resource "watchfiles" do
+      url "https://files.pythonhosted.org/packages/2b/f9/f07a295cde762644aa4c4bb0f88921d2d141af45e735b965fb2e87858328/watchfiles-1.1.1-cp313-cp313-macosx_11_0_arm64.whl", using: :nounzip
+      sha256 "5f3bde70f157f84ece3765b42b4a52c6ac1a50334903c6eaf765362f6ccca88a"
+    end
+  end
+  
+  on_intel do
+    resource "watchfiles" do
+      url "https://files.pythonhosted.org/packages/bb/f4/f750b29225fe77139f7ae5de89d4949f5a99f934c65a1f1c0b248f26f747/watchfiles-1.1.1-cp313-cp313-macosx_10_12_x86_64.whl", using: :nounzip
+      sha256 "130e4876309e8686a5e37dba7d5e9bc77e6ed908266996ca26572437a5271e18"
+    end
+  end
+  
   resource "websockets" do
     url "https://files.pythonhosted.org/packages/04/24/4b2031d72e840ce4c1ccb255f693b15c334757fc50023e4db9537080b8c4/websockets-16.0.tar.gz"
     sha256 "5f6261a5e56e8d5c42a4497b364ea24d94d9563e8fbd44e78ac40879c60179b5"
@@ -294,14 +336,15 @@ class Inframate < Formula
 
   def install
     virtualenv_create(libexec, "python3.13")
-    # Install Rust-based packages as pre-built wheels from PyPI
-    system libexec/"bin/pip", "install", "-v", "--no-deps", "--ignore-installed",
-           "jiter==0.14.0", "pydantic_core==2.46.2", "watchfiles==1.1.1"
-    # Install pure/C-extension packages from source resources
     resources.each do |r|
       r.stage do
-        system libexec/"bin/pip", "install", "-v", "--no-deps", "--no-binary", ":all:",
-               "--ignore-installed", "."
+        whl = Dir.glob("*.whl").first
+        if whl
+          system libexec/"bin/pip", "install", "-v", "--no-deps", "--ignore-installed", whl
+        else
+          system libexec/"bin/pip", "install", "-v", "--no-deps", "--no-binary", ":all:",
+                 "--ignore-installed", "."
+        end
       end
     end
     system libexec/"bin/pip", "install", "-v", "--no-deps", "--no-binary", ":all:",
