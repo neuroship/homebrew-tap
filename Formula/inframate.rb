@@ -3,12 +3,11 @@ class Inframate < Formula
 
   desc "CLI tool for managing Terraform infrastructure with a local web UI"
   homepage "https://github.com/neuroship/inframate"
-  url "https://files.pythonhosted.org/packages/40/f3/34e6bd15a53617ac980d3914c8a540c2f34d43ef852bc67aaefe6d9f0575/inframate-0.1.6.tar.gz"
-  sha256 "52410e03eab5ec5b3ceab655eccfeae950f55a0fba1a31bd5ab817b8879608d8"
+  url "https://files.pythonhosted.org/packages/6c/dc/31c007a327169b178426f7633ae0117d2ef88373243dcb5a8dd69e6a55e0/inframate-0.1.7.tar.gz"
+  sha256 "465c14aa87dafbcaca1ab4b57a0d30a3c1420f2ebfb8c867ee04bcf195fc2383"
   license "AGPL-3.0-only"
 
   depends_on "python@3.13"
-  depends_on "rust" => :build
 
   skip_clean "libexec"
 
@@ -127,11 +126,6 @@ class Inframate < Formula
     sha256 "795dafcc9c04ed0c1fb032c2aa73654d8e8c5023a7df64a53f39190ada629902"
   end
   
-  resource "jiter" do
-    url "https://files.pythonhosted.org/packages/6e/c1/0cddc6eb17d4c53a99840953f95dd3accdc5cfc7a337b0e9b26476276be9/jiter-0.14.0.tar.gz"
-    sha256 "e8a39e66dac7153cf3f964a12aad515afa8d74938ec5cc0018adcdae5367c79e"
-  end
-  
   resource "jmespath" do
     url "https://files.pythonhosted.org/packages/d3/59/322338183ecda247fb5d1763a6cbe46eff7222eaeebafd9fa65d4bf5cb11/jmespath-1.1.0.tar.gz"
     sha256 "472c87d80f36026ae83c6ddd0f1d05d4e510134ed462851fd5f754c8c3cbb88d"
@@ -185,11 +179,6 @@ class Inframate < Formula
   resource "pydantic" do
     url "https://files.pythonhosted.org/packages/09/e5/06d23afac9973109d1e3c8ad38e1547a12e860610e327c05ee686827dc37/pydantic-2.13.2.tar.gz"
     sha256 "b418196607e61081c3226dcd4f0672f2a194828abb9109e9cfb84026564df2d1"
-  end
-  
-  resource "pydantic_core" do
-    url "https://files.pythonhosted.org/packages/43/bb/4742f05b739b2478459bb16fa8470549518c802e06ddcf3f106c5081315e/pydantic_core-2.46.2.tar.gz"
-    sha256 "37bb079f9ee3f1a519392b73fda2a96379b31f2013c6b467fe693e7f2987f596"
   end
   
   resource "Pygments" do
@@ -287,11 +276,6 @@ class Inframate < Formula
     sha256 "6c84bae345b9147082b17371e3dd5d42775bddce91f885499017f4607fdaf39f"
   end
   
-  resource "watchfiles" do
-    url "https://files.pythonhosted.org/packages/c2/c9/8869df9b2a2d6c59d79220a4db37679e74f807c559ffe5265e08b227a210/watchfiles-1.1.1.tar.gz"
-    sha256 "a173cb5c16c4f40ab19cecf48a534c409f7ea983ab8fed0741304a1c0a31b3f2"
-  end
-  
   resource "websockets" do
     url "https://files.pythonhosted.org/packages/04/24/4b2031d72e840ce4c1ccb255f693b15c334757fc50023e4db9537080b8c4/websockets-16.0.tar.gz"
     sha256 "5f6261a5e56e8d5c42a4497b364ea24d94d9563e8fbd44e78ac40879c60179b5"
@@ -309,7 +293,20 @@ class Inframate < Formula
   
 
   def install
-    virtualenv_install_with_resources
+    virtualenv_create(libexec, "python3.13")
+    # Install Rust-based packages as pre-built wheels from PyPI
+    system libexec/"bin/pip", "install", "-v", "--no-deps", "--ignore-installed",
+           "jiter==0.14.0", "pydantic_core==2.46.2", "watchfiles==1.1.1"
+    # Install pure/C-extension packages from source resources
+    resources.each do |r|
+      r.stage do
+        system libexec/"bin/pip", "install", "-v", "--no-deps", "--no-binary", ":all:",
+               "--ignore-installed", "."
+      end
+    end
+    system libexec/"bin/pip", "install", "-v", "--no-deps", "--no-binary", ":all:",
+           "--ignore-installed", "."
+    bin.install_symlink libexec/"bin/inframate"
   end
 
   test do
