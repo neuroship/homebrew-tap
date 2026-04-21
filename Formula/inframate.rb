@@ -3,8 +3,8 @@ class Inframate < Formula
 
   desc "CLI tool for managing Terraform infrastructure with a local web UI"
   homepage "https://github.com/neuroship/inframate"
-  url "https://files.pythonhosted.org/packages/a2/16/0fa346397df277591b603f1c394dfd64a938c27339dc048a7adcb604e0da/inframate-0.2.4.tar.gz"
-  sha256 "3eead23b0e3afa528ea10731f956f257ae362ba220fcc3a95904c250e83d744d"
+  url "https://files.pythonhosted.org/packages/79/fd/fbe8c95f3577c2d9010beee9dfff99c51b6982783ebb51b28dcb23672c58/inframate-0.2.5.tar.gz"
+  sha256 "6b1d2b5f18082b88ed2c5a5c3492fe1c3561efff884aaf270e11a37218137fe1"
   license "AGPL-3.0-only"
 
   depends_on "python@3.13"
@@ -191,21 +191,21 @@ class Inframate < Formula
   end
   
   resource "pydantic" do
-    url "https://files.pythonhosted.org/packages/09/e5/06d23afac9973109d1e3c8ad38e1547a12e860610e327c05ee686827dc37/pydantic-2.13.2.tar.gz"
-    sha256 "b418196607e61081c3226dcd4f0672f2a194828abb9109e9cfb84026564df2d1"
+    url "https://files.pythonhosted.org/packages/d9/e4/40d09941a2cebcb20609b86a559817d5b9291c49dd6f8c87e5feffbe703a/pydantic-2.13.3.tar.gz"
+    sha256 "af09e9d1d09f4e7fe37145c1f577e1d61ceb9a41924bf0094a36506285d0a84d"
   end
   
   on_arm do
     resource "pydantic_core" do
-      url "https://files.pythonhosted.org/packages/73/ab/bafd7c7503757ccc8ec4d1911e106fe474c629443648c51a88f08b0fe91a/pydantic_core-2.46.2-cp313-cp313-macosx_11_0_arm64.whl", using: :nounzip
-      sha256 "48b36e3235140510dc7861f0cd58b714b1cdd3d48f75e10ce52e69866b746f10"
+      url "https://files.pythonhosted.org/packages/91/97/1c41d1f5a19f241d8069f1e249853bcce378cdb76eec8ab636d7bc426280/pydantic_core-2.46.3-cp313-cp313-macosx_11_0_arm64.whl", using: :nounzip
+      sha256 "85348b8f89d2c3508b65b16c3c33a4da22b8215138d8b996912bb1532868885f"
     end
   end
   
   on_intel do
     resource "pydantic_core" do
-      url "https://files.pythonhosted.org/packages/07/2b/662e48254479a2d3450ba24b1e25061108b64339794232f503990c519144/pydantic_core-2.46.2-cp313-cp313-macosx_10_12_x86_64.whl", using: :nounzip
-      sha256 "d26e9eea3715008a09a74585fe9becd0c67fbb145dc4df9756d597d7230a652c"
+      url "https://files.pythonhosted.org/packages/9b/3c/9b5e8eb9821936d065439c3b0fb1490ffa64163bfe7e1595985a47896073/pydantic_core-2.46.3-cp313-cp313-macosx_10_12_x86_64.whl", using: :nounzip
+      sha256 "12bc98de041458b80c86c56b24df1d23832f3e166cbaff011f25d187f5c62c37"
     end
   end
   
