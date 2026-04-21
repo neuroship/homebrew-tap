@@ -3,8 +3,8 @@ class Inframate < Formula
 
   desc "CLI tool for managing Terraform infrastructure with a local web UI"
   homepage "https://github.com/neuroship/inframate"
-  url "https://files.pythonhosted.org/packages/79/fd/fbe8c95f3577c2d9010beee9dfff99c51b6982783ebb51b28dcb23672c58/inframate-0.2.5.tar.gz"
-  sha256 "6b1d2b5f18082b88ed2c5a5c3492fe1c3561efff884aaf270e11a37218137fe1"
+  url "https://files.pythonhosted.org/packages/ca/5a/1bcc6ad39cf6a176cd8aba2afe0830d185f967ca18c64aaf3f1944faac7c/inframate-0.2.6.tar.gz"
+  sha256 "5c182ef65bf3cbe1f42115e24c09a7fdb8a52fd5ffe6e5a7cb7bad4e027adfbf"
   license "AGPL-3.0-only"
 
   depends_on "python@3.13"
@@ -122,8 +122,8 @@ class Inframate < Formula
   end
   
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/6f/6d/0703ccc57f3a7233505399edb88de3cbd678da106337b9fcde432b65ed60/idna-3.11.tar.gz"
-    sha256 "795dafcc9c04ed0c1fb032c2aa73654d8e8c5023a7df64a53f39190ada629902"
+    url "https://files.pythonhosted.org/packages/22/12/2948fbe5513d062169bd91f7d7b1cd97bc8894f32946b71fa39f6e63ca0c/idna-3.12.tar.gz"
+    sha256 "724e9952cc9e2bd7550ea784adb098d837ab5267ef67a1ab9cf7846bdbdd8254"
   end
   
   on_arm do
@@ -295,8 +295,8 @@ class Inframate < Formula
   end
   
   resource "uvicorn" do
-    url "https://files.pythonhosted.org/packages/5e/da/6eee1ff8b6cbeed47eeb5229749168e81eb4b7b999a1a15a7176e51410c9/uvicorn-0.44.0.tar.gz"
-    sha256 "6c942071b68f07e178264b9152f1f16dfac5da85880c4ce06366a96d70d4f31e"
+    url "https://files.pythonhosted.org/packages/eb/2e/62b0d9a2cfc8b4de6771322dae30f2db76c66dae9ec32e94e176a44ad563/uvicorn-0.45.0.tar.gz"
+    sha256 "3fe650df136c5bd2b9b06efc5980636344a2fbb840e9ddd86437d53144fa335d"
   end
   
   resource "uvloop" do
