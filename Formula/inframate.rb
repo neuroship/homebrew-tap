@@ -3,9 +3,9 @@ class Inframate < Formula
   homepage "https://github.com/neuroship/inframate"
   license "AGPL-3.0-only"
 
-  version "0.2.20"
-  url "https://github.com/neuroship/inframate/releases/download/v0.2.20/inframate-v0.2.20-macos-arm64.tar.gz"
-  sha256 "b76a4144cb71b3d0c7849855e46122142575b406e25176be29a42860dc324715"
+  version "0.2.21"
+  url "https://github.com/neuroship/inframate/releases/download/v0.2.21/inframate-v0.2.21-macos-arm64.tar.gz"
+  sha256 "3e0132f84e10ab9bd1dfc23cbdd7b3382d3ac5230b379ed544696884fcfc1818"
 
   depends_on arch: :arm64
 
